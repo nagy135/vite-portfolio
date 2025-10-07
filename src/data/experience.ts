@@ -16,6 +16,20 @@ export const experienceData = [
   },
   {
     title: "Full-Stack Developer",
+    company: "Warehouse",
+    startDate: "Jan 2023",
+    endDate: "Present",
+    responsibilities: [
+      "Standalone system to manage warehouse items",
+      "Next.js fullstack backend powering core management workflows",
+      "Integrations with shop platforms and courier services",
+      "React Native mobile app to scan QR codes in the warehouse",
+      "Self-hosted deployment with monitoring and maintenance"
+    ],
+    stack: "TypeScript, Next.js, React Native, Node.js, Postgres, Docker"
+  },
+  {
+    title: "Full-Stack Developer",
     company: "365.bank",
     location: "Slovakia",
     startDate: "Jan 2022",

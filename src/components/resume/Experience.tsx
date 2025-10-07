@@ -22,7 +22,11 @@ function JobCard({ job }: { job: JobExperience }) {
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
           <div className="flex-1">
-            <CardTitle>{job.title} — {job.company} — {job.location}</CardTitle>
+                    <CardTitle>
+                      {job.title}
+                      {job.company && ` — ${job.company}`}
+                      {job.location && ` — ${job.location}`}
+                    </CardTitle>
             <p className="text-sm text-muted-foreground">{job.startDate} — {job.endDate}</p>
           </div>
           {job.stack && (
