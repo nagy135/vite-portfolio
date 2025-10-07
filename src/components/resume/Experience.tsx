@@ -5,7 +5,7 @@ import { CollapsibleSection } from './CollapsibleSection'
 interface JobExperience {
   title: string
   company: string
-  location: string
+  location?: string
   startDate: string
   endDate: string
   responsibilities: string[]
@@ -22,11 +22,11 @@ function JobCard({ job }: { job: JobExperience }) {
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
           <div className="flex-1">
-                    <CardTitle>
-                      {job.title}
-                      {job.company && ` — ${job.company}`}
-                      {job.location && ` — ${job.location}`}
-                    </CardTitle>
+            <CardTitle>
+              {job.title}
+              {job.company && ` — ${job.company}`}
+              {job.location && ` — ${job.location}`}
+            </CardTitle>
             <p className="text-sm text-muted-foreground">{job.startDate} — {job.endDate}</p>
           </div>
           {job.stack && (
@@ -60,7 +60,7 @@ export function Experience({ experiences }: ExperienceProps) {
       {recentExperiences.map((job, index) => (
         <JobCard key={index} job={job} />
       ))}
-      
+
       {beginningExperiences.length > 0 && (
         <CollapsibleSection title="Beginnings" defaultOpen={false}>
           <div className="space-y-4">
