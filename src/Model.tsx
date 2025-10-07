@@ -2,6 +2,9 @@ import { useRef } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { Center, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
+import { TechBox } from './TechBox'
+import VimIcon from '@/assets/icons/vim.svg'
+import NixIcon from '@/assets/icons/nix.svg'
 
 // Open-source model: RobotExpressive from Three.js examples
 // Source: https://github.com/mrdoob/three.js/tree/master/examples/models/gltf/RobotExpressive
@@ -18,6 +21,18 @@ export function Model(props: ThreeElements['group']) {
         {/* Scale slightly for better presence */}
         <primitive object={gltf.scene} scale={1.0} />
       </Center>
+      
+      {/* Tech boxes in robot's hands */}
+      <TechBox 
+        position={[-0.9, -1.3, 0.7]} 
+        scale={2.0} 
+        icon={VimIcon} 
+      />
+      <TechBox 
+        position={[0.8, -1.3, 0.7]} 
+        scale={2.0} 
+        icon={NixIcon} 
+      />
     </group>
   )
 }
