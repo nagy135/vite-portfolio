@@ -17,7 +17,7 @@ export function TechnicalSkills({ skills }: TechnicalSkillsProps) {
     <div className="space-y-2">
       <Card>
         <CardContent>
-          <ul className="list-disc pl-6 space-y-1 text-sm">
+          <ul className="list-disc pl-6 pt-6 space-y-1 text-sm">
             <li><span className="font-medium">Languages:</span> {skills.languages}</li>
             <li><span className="font-medium">Frameworks:</span> {skills.frameworks}</li>
             <li><span className="font-medium">Infrastructure:</span> {skills.infrastructure}</li>

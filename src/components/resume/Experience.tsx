@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TechnologyIcons } from './TechnologyIcons'
 import { CollapsibleSection } from './CollapsibleSection'
+import { Particles } from '../ui/particles'
 
 interface JobExperience {
   title: string
@@ -18,35 +19,38 @@ interface ExperienceProps {
 
 function JobCard({ job }: { job: JobExperience }) {
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
-          <div className="flex-1">
-            <CardTitle>
-              {job.title}
-              {job.company && ` — ${job.company}`}
-              {job.location && ` — ${job.location}`}
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">{job.startDate} — {job.endDate}</p>
-          </div>
-          {job.stack && (
-            <div className="flex-shrink-0">
-              <TechnologyIcons stack={job.stack} />
+    <div className="relative">
+      <Particles className="absolute inset-0 z-0 opacity-50" quantity={120} ease={80} />
+      <Card >
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+            <div className="flex-1">
+              <CardTitle>
+                {job.title}
+                {job.company && ` — ${job.company}`}
+                {job.location && ` — ${job.location}`}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">{job.startDate} — {job.endDate}</p>
             </div>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent>
-        <ul className="list-disc pl-6 space-y-1 text-sm">
-          {job.responsibilities.map((responsibility, index) => (
-            <li key={index}>{responsibility}</li>
-          ))}
-          {job.stack && (
-            <li><span className="font-medium">Stack:</span> {job.stack}</li>
-          )}
-        </ul>
-      </CardContent>
-    </Card>
+            {job.stack && (
+              <div className="flex-shrink-0">
+                <TechnologyIcons stack={job.stack} />
+              </div>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-6 space-y-1 text-sm">
+            {job.responsibilities.map((responsibility, index) => (
+              <li key={index}>{responsibility}</li>
+            ))}
+            {job.stack && (
+              <li><span className="font-medium">Stack:</span> {job.stack}</li>
+            )}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 

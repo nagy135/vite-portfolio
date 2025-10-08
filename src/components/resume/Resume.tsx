@@ -21,27 +21,27 @@ export function Resume() {
         <CollapsibleSection title="Stack" defaultOpen={true}>
           <Stack stack={stackData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="Experience">
           <Experience experiences={experienceData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="Education">
           <Education education={educationData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="Technical Skills">
           <TechnicalSkills skills={technicalSkillsData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="Languages">
           <Languages languages={languagesData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="Projects">
           <Projects projects={projectsData} />
         </CollapsibleSection>
-        
+
         <CollapsibleSection title="About Me">
           <AboutMe aboutMe={aboutMeData} />
         </CollapsibleSection>

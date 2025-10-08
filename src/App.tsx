@@ -12,12 +12,15 @@ import { Phone, Mail, Globe } from 'lucide-react'
 import GitHubIcon from '@/assets/icons/github.svg'
 import LinkedInIcon from '@/assets/icons/linkedin.svg'
 import { TooltipProvider } from './components/ui/tooltip'
+import { MorphingText } from './components/ui/morphing-text'
+import { Particles } from './components/ui/particles'
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TooltipProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen relative flex flex-col">
+          <Particles className="absolute inset-0 z-0" quantity={80} ease={80} />
           {/* Theme Toggle */}
           <div className="absolute top-4 right-4 z-50">
             <ModeToggle />
@@ -27,9 +30,7 @@ function App() {
           <section className="w-full px-4 sm:px-6 lg:px-8 py-8 shadow-sm bg-gradient-to-b from-transparent to-muted/5 cursor-move">
             <div className="mx-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
               <div className="flex flex-col gap-2">
-                <h1 className="text-4xl sm:text-5xl font-bold text-left drop-shadow-sm">Portfolio</h1>
-                <p className="mt-2 text-xl sm:text-2xl text-left text-muted-foreground">Viktor Nagy</p>
-                <p>Just a CV summary with with some project previews and some animations to show some concepts.</p>
+                <MorphingText className="" texts={['CV', 'Viktor Nagy']} />
               </div>
               <div className="w-full h-[280px] sm:h-[340px] md:h-[380px] rounded-lg shadow-xl bg-gradient-to-br from-background to-muted/10 overflow-hidden">
                 <Canvas camera={{ position: [7.5, 2, 4], fov: 50 }}>

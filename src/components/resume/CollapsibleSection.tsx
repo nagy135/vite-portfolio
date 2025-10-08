@@ -28,8 +28,8 @@ export function CollapsibleSection({ title, children, defaultOpen = false }: Col
       </button>
       <div
         className={`transition-all duration-300 ease-in-out ${isOpen
-            ? 'max-h-[5000px] opacity-100'
-            : 'max-h-0 opacity-0 overflow-hidden'
+          ? 'max-h-[5000px] opacity-100'
+          : 'max-h-0 opacity-0 overflow-hidden'
           }`}
       >
         <div className="px-4 pb-4 pt-2">
