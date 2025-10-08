@@ -68,7 +68,6 @@ export function WaveString({
 
   // Throttling to prevent hit loops
   const lastHitTimeRef = useRef<number>(0)
-  const hitCooldownRef = useRef<number>(hitCooldown) // ms cooldown between hits
 
 
   // Resize handling with DPR support
