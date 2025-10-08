@@ -14,6 +14,7 @@ import LinkedInIcon from '@/assets/icons/linkedin.svg'
 import { TooltipProvider } from './components/ui/tooltip'
 import { MorphingText } from './components/ui/morphing-text'
 import { Particles } from './components/ui/particles'
+import { WaveString } from '@/components/ui/wave-string'
 
 function App() {
   return (
@@ -43,6 +44,13 @@ function App() {
                   <OrbitControls enablePan={false} enableZoom={true} autoRotate autoRotateSpeed={1.1} />
                 </Canvas>
               </div>
+            </div>
+            <div className="mx-auto w-full max-w-5xl mt-6 cursor-pointer">
+              <WaveString
+                className="w-full"
+                height={100}
+                onTargetHit={() => console.log('Target hit!')}
+              />
             </div>
           </section>
 
