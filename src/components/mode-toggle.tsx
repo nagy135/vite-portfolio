@@ -11,9 +11,8 @@ export function ModeToggle() {
   }
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme} className="bg-background/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl transition-shadow">
-      <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+    <Button variant="outline" size="icon" onClick={toggleTheme} className="hover:bg-muted/50 cursor-pointer">
+      {theme === "dark" ? <Sun className="h-[1.2rem] w-[1.2rem] " /> : <Moon className="absolute h-[1.2rem] w-[1.2rem] " />}
       <span className="sr-only">Toggle theme</span>
     </Button>
   )

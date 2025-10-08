@@ -1,4 +1,4 @@
-import { Tooltip } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 interface TechnologyIconsProps {
   stack: string
 }
@@ -50,7 +50,7 @@ export function TechnologyIcons({ stack }: TechnologyIconsProps) {
 
   // Extract technologies from stack string
   const technologies = stack.split(',').map(tech => tech.trim())
-  
+
   // Get icons for technologies that have mappings
   const icons = technologies
     .map(tech => {
@@ -65,18 +65,23 @@ export function TechnologyIcons({ stack }: TechnologyIconsProps) {
   return (
     <div className="flex gap-1 justify-start sm:justify-end flex-wrap">
       {icons.map(({ name, src }, index) => (
-        <Tooltip key={index} content={name}>
-          <div 
-            className="p-1 rounded-md bg-card border shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 cursor-pointer dark:bg-slate-200"
-          >
-            <div className="h-8 w-8 rounded p-0">
-              <img 
-                src={src} 
-                alt={name}
-                className="h-full w-full"
-              />
+        <Tooltip key={index}>
+          <TooltipTrigger>
+            <div
+              className="p-1 rounded-md bg-card border border-slate-300 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 cursor-pointer dark:bg-slate-200"
+            >
+              <div className="h-8 w-8 rounded p-0">
+                <img
+                  src={src}
+                  alt={name}
+                  className="h-full w-full"
+                />
+              </div>
             </div>
-          </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p className="text-sm">{name}</p>
+          </TooltipContent>
         </Tooltip>
       ))}
     </div>

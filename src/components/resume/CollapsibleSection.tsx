@@ -11,7 +11,7 @@ export function CollapsibleSection({ title, children, defaultOpen = false }: Col
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   return (
-    <div className="border rounded-lg overflow-hidden transition-all duration-200 shadow-md hover:shadow-lg bg-card">
+    <div className="border border-slate-300 rounded-lg overflow-hidden transition-all duration-200 shadow-md hover:shadow-lg bg-card">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-muted/50 transition-colors rounded-t-lg cursor-pointer"
@@ -26,12 +26,11 @@ export function CollapsibleSection({ title, children, defaultOpen = false }: Col
           )}
         </div>
       </button>
-      <div 
-        className={`transition-all duration-300 ease-in-out ${
-          isOpen 
-            ? 'max-h-[5000px] opacity-100' 
+      <div
+        className={`transition-all duration-300 ease-in-out ${isOpen
+            ? 'max-h-[5000px] opacity-100'
             : 'max-h-0 opacity-0 overflow-hidden'
-        }`}
+          }`}
       >
         <div className="px-4 pb-4 pt-2">
           {children}
