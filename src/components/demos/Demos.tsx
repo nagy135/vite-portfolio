@@ -1,5 +1,6 @@
 import { SimpleChat } from './SimpleChat'
 import { ThreeDemo } from './ThreeDemo'
+import LogoDemo from './LogoDemo'
 
 export function Demos() {
   return (
@@ -23,6 +24,17 @@ export function Demos() {
         </p>
         <div className="border rounded-lg p-4 bg-card">
           <ThreeDemo />
+        </div>
+      </div>
+
+      {/* Demo 3: Interactive Logo */}
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Interactive Logo</h3>
+        <p className="text-sm text-muted-foreground">
+          Physics-based SVG animation that responds to mouse movements. I m sharing it to demonstrate what kind of person i am, i saw cool animation and i had to understand how to do it :D It is inspired by <a href="https://elm-lang.org/" target="_blank" className="underline">this</a> but with my own svg with my name's first letter and much more sensitive to show more how it works. Did many more animations like this in past few years and most are on my github but this one i really like (its simplicity and fun) and consider my LOGO so its here :)
+        </p>
+        <div className="border rounded-lg p-4 bg-card flex justify-center">
+          <LogoDemo />
         </div>
       </div>
 
