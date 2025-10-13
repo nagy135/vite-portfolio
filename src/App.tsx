@@ -28,12 +28,12 @@ function App() {
           </div>
 
           {/* Hero: Title + Robot side-by-side */}
-          <section className="w-full px-4 sm:px-6 lg:px-8 py-8 shadow-sm bg-gradient-to-b from-transparent to-muted/5 cursor-move">
+          <section className="w-full px-4 sm:px-6 lg:px-8 py-8 shadow-sm bg-gradient-to-b from-transparent to-muted/5">
             <div className="mx-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
               <div className="flex flex-col gap-2">
                 <MorphingText className="" texts={['CV', 'Viktor Nagy']} />
               </div>
-              <div className="w-full h-[280px] sm:h-[340px] md:h-[380px] rounded-lg shadow-xl bg-gradient-to-br from-background to-muted/10 overflow-hidden">
+              <div className="w-full h-[280px] sm:h-[340px] md:h-[380px] rounded-lg shadow-xl bg-gradient-to-br from-background to-muted/10 overflow-hidden cursor-move">
                 <Canvas camera={{ position: [7.5, 2, 4], fov: 50 }}>
                   <ambientLight intensity={0.7} />
                   <directionalLight position={[5, 5, 5]} intensity={1.2} />
