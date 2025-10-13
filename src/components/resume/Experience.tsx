@@ -56,7 +56,7 @@ function JobCard({ job }: { job: JobExperience }) {
 
 export function Experience({ experiences }: ExperienceProps) {
   // Split experiences: first 3 are main, last 4 go into "Beginnings"
-  const recentExperiences = experiences.slice(0, 4)
+  const recentExperiences = experiences.slice(0, 5)
   const beginningExperiences = experiences.slice(5)
 
   return (
