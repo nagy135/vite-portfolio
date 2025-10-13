@@ -14,7 +14,7 @@ export function AboutMe({ aboutMe }: AboutMeProps) {
     <div className="space-y-2">
       <Card>
         <CardContent>
-          <p className="text-sm">
+          <p className="text-sm pt-5">
             {aboutMe.description} GitHub: <a className="underline" href={aboutMe.github} target="_blank" rel="noreferrer">github.com/nagy135</a>
           </p>
         </CardContent>

@@ -15,6 +15,9 @@ export type WaveStringProps = {
   // Interaction
   impulseStrength?: number // px/sec impulse magnitude applied to velocity
   impulseRadius?: number // radius in points for Gaussian impulse spread
+  // Hover interaction
+  hoverImpulseStrengthMultiplier?: number // scales impulseStrength on hover
+  hoverThrottleMs?: number // throttle for hover impulses
   // Target square
   targetHeight?: number // height of the target square
   targetWidth?: number // width of the target square
@@ -27,47 +30,52 @@ export function WaveString({
   sections = 120,
   height = 64,
   className,
-  lineColor = '#16a34a',
+  lineColor,
   lineWidth = 2,
   backgroundColor = 'transparent',
   stiffness = 13, // higher -> stronger pull to baseline
-  coupling = 220, // higher -> tighter string, faster propagation
+  coupling = 120, // higher -> tighter string, faster propagation
   damping = 1.3, // higher -> faster decay
   fixedEnds = true,
-  impulseStrength = 320,
+  impulseStrength = 40,
   impulseRadius = 10,
-  targetHeight = 10,
-  targetWidth = 24,
-  targetColor = '#0b0b0b',
-  onTargetHit,
-  hitCooldown = 1500,
+  hoverImpulseStrengthMultiplier = 0.5,
+  hoverThrottleMs = 30,
 }: WaveStringProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const animRef = useRef<number | null>(null)
 
   const [width, setWidth] = useState<number>(0)
+  const [resolvedLineColor, setResolvedLineColor] = useState<string>(() => {
+    if (lineColor) return lineColor
+    const isDark = document.documentElement.classList.contains('dark')
+    return isDark ? '#ffffff' : '#000000'
+  })
+
+  // Update line color on theme or prop change
+  useEffect(() => {
+    if (lineColor) {
+      setResolvedLineColor(lineColor)
+      return
+    }
+    const compute = () =>
+      document.documentElement.classList.contains('dark') ? '#ffffff' : '#000000'
+    setResolvedLineColor(compute())
+    const observer = new MutationObserver(() => {
+      setResolvedLineColor(compute())
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    })
+    return () => observer.disconnect()
+  }, [lineColor])
 
   // State stored in refs to avoid re-renders each frame
   const displacementsRef = useRef<number[]>([])
   const velocitiesRef = useRef<number[]>([])
-  const lastTargetCheckRef = useRef<number>(0)
-
-  // Target hit effect state
-  const targetHitEffectRef = useRef<{
-    active: boolean
-    startTime: number
-    duration: number
-    maxRadius: number
-  }>({
-    active: false,
-    startTime: 0,
-    duration: 300, // ms
-    maxRadius: 40, // px
-  })
-
-  // Throttling to prevent hit loops
-  const lastHitTimeRef = useRef<number>(0)
+  const lastHoverMsRef = useRef<number>(0)
 
 
   // Resize handling with DPR support
@@ -173,84 +181,13 @@ export function WaveString({
       // Draw polyline
       ctx.beginPath()
       ctx.lineWidth = lineWidth
-      ctx.strokeStyle = lineColor
+      ctx.strokeStyle = resolvedLineColor
       ctx.moveTo(0, baselineY + y[0])
       for (let i = 1; i < pointCount; i += 1) {
         ctx.lineTo(i * sectionWidth, baselineY + y[i])
       }
       ctx.stroke()
 
-      // Draw target square on the right side
-      const targetX = width - 10 * targetWidth
-      const targetY = baselineY - targetHeight / 2
-
-      ctx.fillStyle = targetColor
-      ctx.fillRect(targetX, targetY, targetWidth, targetHeight)
-
-      // Draw target hit effect (expanding circle)
-      if (targetHitEffectRef.current.active) {
-        const effect = targetHitEffectRef.current
-        const elapsed = nowMs - effect.startTime
-        const progress = Math.min(1, elapsed / effect.duration)
-
-        if (progress >= 1) {
-          effect.active = false
-        } else {
-          // Easing function for smooth expansion
-          const easedProgress = 1 - Math.pow(1 - progress, 3)
-          const radius = effect.maxRadius * easedProgress
-          const alpha = 1 - progress
-
-          const centerX = targetX + targetWidth / 2
-          const centerY = targetY + targetHeight / 2
-
-          ctx.save()
-          ctx.globalAlpha = alpha
-          ctx.strokeStyle = '#ff6b6b'
-          ctx.lineWidth = 3
-          ctx.beginPath()
-          ctx.arc(centerX, centerY, radius, 0, Math.PI * 2)
-          ctx.stroke()
-          ctx.restore()
-        }
-      }
-
-      // Check if wave hits target top edge
-      if (onTargetHit && nowMs - lastTargetCheckRef.current > 16) { // Check every ~16ms
-        lastTargetCheckRef.current = nowMs
-
-        // Find the point closest to the target area
-        const targetCenterX = targetX + targetWidth / 2
-        const targetIndex = Math.max(0, Math.min(pointCount - 1, Math.round(targetCenterX / sectionWidth)))
-
-        // Check if wave displacement at target position exceeds target top
-        const waveY = baselineY + y[targetIndex]
-        const targetTop = targetY
-
-        if (waveY <= targetTop) {
-          // Check throttling - only trigger if enough time has passed
-          const timeSinceLastHit = nowMs - lastHitTimeRef.current
-          if (timeSinceLastHit >= hitCooldown) {
-            // Update last hit time
-            lastHitTimeRef.current = nowMs
-
-            // Trigger hit effect
-            targetHitEffectRef.current.active = true
-            targetHitEffectRef.current.startTime = nowMs
-
-            // Apply impulse to string at target position (original behavior)
-            const impulseRadius = 8
-            const sigma = impulseRadius / 2
-            for (let i = Math.max(0, targetIndex - impulseRadius); i <= Math.min(pointCount - 1, targetIndex + impulseRadius); i += 1) {
-              const d = i - targetIndex
-              const gaussian = Math.exp(-(d * d) / (2 * sigma * sigma))
-              velocitiesRef.current[i] -= impulseStrength * 0.5 * gaussian // Half strength for target hit
-            }
-
-            onTargetHit()
-          }
-        }
-      }
 
       animRef.current = requestAnimationFrame(draw)
     }
@@ -261,15 +198,10 @@ export function WaveString({
       running = false
       if (animRef.current !== null) cancelAnimationFrame(animRef.current)
     }
-  }, [width, height, sections, lineColor, lineWidth, backgroundColor, stiffness, coupling, damping, fixedEnds, targetHeight, targetWidth, targetColor, onTargetHit])
+  }, [width, height, sections, resolvedLineColor, lineWidth, backgroundColor, stiffness, coupling, damping, fixedEnds])
 
-  // Click handler applies an upward Gaussian impulse to velocities
-  const onClick = (evt: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const rect = canvas.getBoundingClientRect()
-    const x = evt.clientX - rect.left
-
+  // Apply a Gaussian-distributed impulse centered at X
+  const applyImpulseAtX = (x: number, strength: number) => {
     const pointCount = Math.max(2, sections)
     const sectionWidth = width / (pointCount - 1)
     const centerIndex = Math.max(0, Math.min(pointCount - 1, Math.round(x / sectionWidth)))
@@ -281,13 +213,35 @@ export function WaveString({
       const d = i - centerIndex
       const gaussian = Math.exp(-(d * d) / (2 * sigma * sigma))
       // Canvas y increases downward; negative velocity goes upward
-      velocitiesRef.current[i] -= impulseStrength * gaussian
+      velocitiesRef.current[i] -= strength * gaussian
     }
+  }
+
+  // Click handler applies an upward Gaussian impulse to velocities
+  const onClick = (evt: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const rect = canvas.getBoundingClientRect()
+    const x = evt.clientX - rect.left
+    applyImpulseAtX(x, impulseStrength)
+  }
+
+  // Hover handler: apply smaller impulses as the mouse moves across
+  const onMouseMove = (evt: React.MouseEvent<HTMLCanvasElement>) => {
+    const now = performance.now()
+    if (now - lastHoverMsRef.current < hoverThrottleMs) return
+    lastHoverMsRef.current = now
+
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const rect = canvas.getBoundingClientRect()
+    const x = evt.clientX - rect.left
+    applyImpulseAtX(x, impulseStrength * hoverImpulseStrengthMultiplier)
   }
 
   return (
     <div ref={containerRef} className={className} style={{ height }}>
-      <canvas ref={canvasRef} onClick={onClick} aria-label="Wave string canvas" />
+      <canvas ref={canvasRef} onClick={onClick} onMouseMove={onMouseMove} aria-label="Wave string canvas" />
     </div>
   )
 }

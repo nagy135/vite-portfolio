@@ -49,7 +49,6 @@ function App() {
               <WaveString
                 className="w-full"
                 height={100}
-                onTargetHit={() => console.log('Target hit!')}
               />
             </div>
           </section>
