@@ -13,7 +13,7 @@ import { languagesData } from '@/data/languages'
 import { projectsData } from '@/data/projects'
 import { aboutMeData } from '@/data/aboutMe'
 import { stackData } from '@/data/stack'
-import { SimpleChat } from '@/components/demos/SimpleChat'
+import { Demos } from '@/components/demos/Demos'
 
 export function Resume() {
   return (
@@ -44,7 +44,7 @@ export function Resume() {
         </CollapsibleSection>
 
         <CollapsibleSection title="Demos">
-          <SimpleChat />
+          <Demos />
         </CollapsibleSection>
 
         <CollapsibleSection title="About Me">

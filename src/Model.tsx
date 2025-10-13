@@ -21,17 +21,17 @@ export function Model(props: ThreeElements['group']) {
         {/* Scale slightly for better presence */}
         <primitive object={gltf.scene} scale={1.0} />
       </Center>
-      
+
       {/* Tech boxes in robot's hands */}
-      <TechBox 
-        position={[-0.9, -1.3, 0.7]} 
-        scale={2.0} 
-        icon={VimIcon} 
+      <TechBox
+        position={[-0.9, -1.3, 0.7]}
+        scale={2.0}
+        icon={VimIcon}
       />
-      <TechBox 
-        position={[0.8, -1.3, 0.7]} 
-        scale={2.0} 
-        icon={NixIcon} 
+      <TechBox
+        position={[0.8, -1.3, 0.7]}
+        scale={2.0}
+        icon={NixIcon}
       />
     </group>
   )
