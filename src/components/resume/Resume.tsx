@@ -13,6 +13,7 @@ import { languagesData } from '@/data/languages'
 import { projectsData } from '@/data/projects'
 import { aboutMeData } from '@/data/aboutMe'
 import { stackData } from '@/data/stack'
+import { SimpleChat } from '@/components/demos/SimpleChat'
 
 export function Resume() {
   return (
@@ -40,6 +41,10 @@ export function Resume() {
 
         <CollapsibleSection title="Projects">
           <Projects projects={projectsData} />
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Demos">
+          <SimpleChat />
         </CollapsibleSection>
 
         <CollapsibleSection title="About Me">

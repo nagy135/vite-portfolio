@@ -1,0 +1,11 @@
+services:
+  chat:
+    build: ./server
+    container_name: portfolio-chat
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - CORS_ORIGIN=*
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
