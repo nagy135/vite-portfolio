@@ -28,7 +28,9 @@ export const projectsData = [
   {
     name: "Fitness Tracker",
     description: "Personal fitness tracker built with Next.js, TailwindCSS, and postgres",
-    url: "https://fit.infiniter.tech"
+    url: "https://fit.infiniter.tech",
+    video: "/videos/fit.mp4",
+    videoDescription: "Personal fitness tracker built with Next.js and sqlite, idea was to track overall volume of my workout and build exactly the app i wanted to have. Heavily vibe-coded, tried to make opinion about currect vibe-code possiblities. Golang backend + Next.js frontend"
   },
   {
     name: "Reminder App",
