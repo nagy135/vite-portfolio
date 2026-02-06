@@ -1,3 +1,4 @@
+import { ConvexDemo } from './ConvexDemo'
 import { SimpleChat } from './SimpleChat'
 import { ThreeDemo } from './ThreeDemo'
 import LogoDemo from './LogoDemo'
@@ -6,7 +7,18 @@ import { CanvasAnimation } from './CanvasAnimation'
 export function Demos() {
   return (
     <div className="space-y-8">
-      {/* Demo 1: Socket Chat */}
+      {/* Demo 1: Convex Game of Life */}
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Convex Game of Life</h3>
+        <p className="text-sm text-muted-foreground">
+          Real-time multiplayer Game of Life using Convex as the backend database. Each cell is stored as a separate record in the database, and board functions insert/delete cells every tick. Changes are synchronized across multiple connected clients in real-time, demonstrating how a serverless backend can coordinate complex shared state.
+        </p>
+        <div className="border rounded-lg p-4 bg-card">
+          <ConvexDemo />
+        </div>
+      </div>
+
+      {/* Demo 2: Socket Chat */}
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Socket Chat</h3>
         <p className="text-sm text-muted-foreground">
@@ -17,7 +29,7 @@ export function Demos() {
         </div>
       </div>
 
-      {/* Demo 2: Three.js Nike Shoe */}
+      {/* Demo 3: Three.js Nike Shoe */}
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Three.js</h3>
         <p className="text-sm text-muted-foreground">
@@ -28,7 +40,7 @@ export function Demos() {
         </div>
       </div>
 
-       {/* Demo 3: Interactive Logo */}
+       {/* Demo 4: Interactive Logo */}
        <div className="space-y-2">
          <h3 className="text-lg font-semibold">Interactive Logo</h3>
          <p className="text-sm text-muted-foreground">
@@ -39,7 +51,7 @@ export function Demos() {
          </div>
        </div>
 
-       {/* Demo 4: Canvas Animation */}
+       {/* Demo 5: Canvas Animation */}
        <div className="space-y-2">
          <h3 className="text-lg font-semibold">Canvas Animation</h3>
          <p className="text-sm text-muted-foreground">
