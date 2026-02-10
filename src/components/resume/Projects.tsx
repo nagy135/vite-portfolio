@@ -6,6 +6,7 @@ interface Project {
   url: string
   video?: string
   videoDescription?: string
+  images?: string[]
 }
 
 interface ProjectsProps {
@@ -36,6 +37,18 @@ export function Projects({ projects }: ProjectsProps) {
                         {project.videoDescription}
                       </p>
                     )}
+                  </div>
+                )}
+                {project.images && (
+                  <div className="mt-2 flex gap-2 flex-wrap">
+                    {project.images.map((image, imgIndex) => (
+                      <img
+                        key={imgIndex}
+                        src={image}
+                        alt={`${project.name} screenshot ${imgIndex + 1}`}
+                        className="max-w-2xl rounded border border-gray-200"
+                      />
+                    ))}
                   </div>
                 )}
               </li>
