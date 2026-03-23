@@ -1,4 +1,5 @@
 import { ConvexDemo } from './ConvexDemo'
+import { CarDemo } from './CarDemo'
 import { SimpleChat } from './SimpleChat'
 import { ThreeDemo } from './ThreeDemo'
 import LogoDemo from './LogoDemo'
@@ -6,7 +7,17 @@ import { CanvasAnimation } from './CanvasAnimation'
 
 export function Demos() {
   return (
-    <div className="space-y-8">
+      <div className="space-y-8">
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold">Car Demo</h3>
+        <p className="text-sm text-muted-foreground">
+          Browser-based car playground embedded directly from my hosted demo. It shows an interactive driving experience running at <a href="https://car.infiniter.tech" target="_blank" rel="noreferrer" className="underline">car.infiniter.tech</a>.
+        </p>
+        <div className="border rounded-lg bg-white p-2">
+          <CarDemo />
+        </div>
+      </div>
+
       {/* Demo 1: Convex Game of Life */}
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Convex Game of Life</h3>
@@ -65,4 +76,3 @@ export function Demos() {
      </div>
    )
 }
-
