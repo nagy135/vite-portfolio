@@ -59,7 +59,7 @@ function App() {
               <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm py-4">
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
-                  <span>017641111740</span>
+                  <span>+49 176 4111 1740</span>
                 </div>
                 <Separator className="hidden sm:block w-px h-4" />
                 <a href="mailto:viktor.nagy1995@gmail.com" className="underline flex items-center gap-2">
