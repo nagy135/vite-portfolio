@@ -38,6 +38,15 @@ export const AnimatedThemeToggler = ({
   const toggleTheme = useCallback(async () => {
     if (!buttonRef.current) return
 
+    if (typeof document.startViewTransition !== "function") {
+      const newTheme = !isDark
+
+      setIsDark(newTheme)
+      document.documentElement.classList.toggle("dark")
+      localStorage.setItem("theme", newTheme ? "dark" : "light")
+      return
+    }
+
     await document.startViewTransition(() => {
       flushSync(() => {
         const newTheme = !isDark
@@ -52,8 +61,8 @@ export const AnimatedThemeToggler = ({
     const x = left + width / 2
     const y = top + height / 2
     const maxRadius = Math.hypot(
-      Math.max(left, window.innerWidth - left),
-      Math.max(top, window.innerHeight - top)
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
     )
 
     document.documentElement.animate(
@@ -75,7 +84,7 @@ export const AnimatedThemeToggler = ({
     <button
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn('cursor-pointer', className)}
+      className={cn("cursor-pointer", className)}
       {...props}
     >
       {isDark ? <Sun /> : <Moon />}
