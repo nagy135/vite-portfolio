@@ -73,7 +73,9 @@ function App() {
                 </a>
                 <Separator className="hidden sm:block w-px h-4" />
                 <a href="https://github.com/nagy135" target="_blank" className="underline flex items-center gap-2" rel="noreferrer">
-                  <img src={GitHubIcon} alt="GitHub" className="h-4 w-4" />
+                  <span className="rounded-full bg-white p-0.5">
+                    <img src={GitHubIcon} alt="GitHub" className="h-4 w-4" />
+                  </span>
                   <span>github.com/nagy135</span>
                 </a>
                 <Separator className="hidden sm:block w-px h-4" />
