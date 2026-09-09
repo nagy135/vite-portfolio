@@ -63,7 +63,7 @@ export function TechnologyIcons({ stack }: TechnologyIconsProps) {
   if (icons.length === 0) return null
 
   return (
-    <div className="flex gap-1 justify-start sm:justify-end flex-wrap">
+    <div className="relative z-20 flex gap-1 justify-start sm:justify-end flex-wrap">
       {icons.map(({ name, src }, index) => (
         <Tooltip key={index}>
           <TooltipTrigger>

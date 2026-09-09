@@ -20,15 +20,15 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TooltipProvider>
-        <div className="min-h-screen relative flex flex-col">
-          <Particles className="absolute inset-0 z-0" quantity={80} ease={80} />
+        <div className="min-h-screen relative isolate flex flex-col">
+          <Particles className="absolute inset-0 -z-10" quantity={80} ease={80} />
           {/* Theme Toggle */}
           <div className="absolute top-4 right-4 z-50">
             <ModeToggle />
           </div>
 
           {/* Hero: Title + Robot side-by-side */}
-          <section className="w-full px-4 sm:px-6 lg:px-8 py-8 shadow-sm bg-gradient-to-b from-transparent to-muted/5">
+          <section className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-8 shadow-sm bg-gradient-to-b from-transparent to-muted/5">
             <div className="mx-auto w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
               <div className="flex flex-col gap-2">
                 <MorphingText className="" texts={['CV', 'Viktor Nagy']} />
@@ -54,7 +54,7 @@ function App() {
           </section>
 
           {/* Social + Contacts (full width centered) */}
-          <div className="w-full px-4 sm:px-6 lg:px-8 bg-muted/20">
+          <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 bg-muted/20">
             <div className="mx-auto w-full max-w-5xl">
               <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm py-4">
                 <div className="flex items-center gap-2">
@@ -76,7 +76,7 @@ function App() {
                   <span className="rounded-full bg-white p-0.5">
                     <img src={GitHubIcon} alt="GitHub" className="h-4 w-4" />
                   </span>
-                  <span>github.com/nagy135</span>
+                  <span>nagy135</span>
                 </a>
                 <Separator className="hidden sm:block w-px h-4" />
                 <a href="https://www.linkedin.com/in/viktor-nagy-5a3504167" target="_blank" className="underline flex items-center gap-2" rel="noreferrer">
@@ -88,7 +88,9 @@ function App() {
           </div>
 
           {/* Resume Content */}
-          <Resume />
+          <div className="relative z-10">
+            <Resume />
+          </div>
         </div>
       </TooltipProvider>
     </ThemeProvider>

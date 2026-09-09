@@ -19,9 +19,9 @@ interface ExperienceProps {
 
 function JobCard({ job }: { job: JobExperience }) {
   return (
-    <div className="relative">
+    <div className="relative isolate">
       <Particles className="absolute inset-0 z-0 opacity-50" quantity={120} ease={80} />
-      <Card >
+      <Card className="relative z-10">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
             <div className="flex-1">
@@ -33,7 +33,7 @@ function JobCard({ job }: { job: JobExperience }) {
               <p className="text-sm text-muted-foreground">{job.startDate} — {job.endDate}</p>
             </div>
             {job.stack && (
-              <div className="flex-shrink-0">
+              <div className="relative z-20 flex-shrink-0">
                 <TechnologyIcons stack={job.stack} />
               </div>
             )}

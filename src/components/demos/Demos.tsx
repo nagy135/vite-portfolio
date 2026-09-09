@@ -24,7 +24,7 @@ export function Demos() {
         <p className="text-sm text-muted-foreground">
           Real-time multiplayer Game of Life using Convex as the backend database. Each cell is stored as a separate record in the database, and board functions insert/delete cells every tick. Changes are synchronized across multiple connected clients in real-time, demonstrating how a serverless backend can coordinate complex shared state.
         </p>
-        <div className="border rounded-lg p-4 bg-card">
+        <div className="border rounded-lg overflow-hidden bg-card">
           <ConvexDemo />
         </div>
       </div>
