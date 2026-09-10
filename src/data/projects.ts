@@ -1,17 +1,27 @@
 interface ProjectData {
-  id: string
-  name: string
-  description: string
-  url: string
-  category: "Platforms" | "Personal tools"
-  technologies: string[]
-  video?: string
-  poster?: string
-  videoDescription?: string
-  images?: string[]
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  category: "Platforms" | "Personal tools";
+  technologies: string[];
+  video?: string;
+  poster?: string;
+  videoDescription?: string;
+  images?: string[];
 }
 
 export const projectsData: ProjectData[] = [
+  {
+    id: "metzler",
+    name: "Metzler",
+    description: "Website redesign for Metzler Bank, a German bank, built with Next.js and Payload CMS.",
+    url: "https://www.metzler.com/de",
+    category: "Platforms",
+    technologies: ["Next.js", "Payload CMS"],
+    video: "/videos/metzler.mp4",
+    poster: "/images/metzler.jpeg",
+  },
   {
     id: "britestage",
     name: "Britestage",
@@ -26,16 +36,6 @@ export const projectsData: ProjectData[] = [
       "This recording follows four connected browser windows: an event controller, a connected speaker, a stage player, and the main presentation. It demonstrates synchronized content, webcam streaming, and screen sharing over a limited-bandwidth connection.",
   },
   {
-    id: "edit",
-    name: "Edit",
-    description:
-      "An AI image editor that keeps every possibility open. Explore edits as branches, without losing where you started.",
-    url: "https://edit.infiniter.tech",
-    category: "Personal tools",
-    technologies: ["AI image editing", "Branching history"],
-    images: ["/images/ai_edit_demo.jpeg", "/images/ai_edit_timeline.jpeg"],
-  },
-  {
     id: "rull",
     name: "Market Rull World",
     description:
@@ -47,6 +47,16 @@ export const projectsData: ProjectData[] = [
     poster: "/images/rull-preview.jpg",
     videoDescription:
       "An NFT marketplace with live socket-based auctions and minting on demand. Promotions during MMA events generated bursts of thousands of requests, making query optimization and caching central to the implementation. This is an archived project; the recording preserves the original experience.",
+  },
+  {
+    id: "edit",
+    name: "Edit",
+    description:
+      "An AI image editor that keeps every possibility open. Explore edits as branches, without losing where you started.",
+    url: "https://edit.infiniter.tech",
+    category: "Personal tools",
+    technologies: ["AI image editing", "Branching history"],
+    images: ["/images/ai_edit_demo.jpeg", "/images/ai_edit_timeline.jpeg"],
   },
   {
     id: "vocabulary",
@@ -92,4 +102,4 @@ export const projectsData: ProjectData[] = [
     category: "Personal tools",
     technologies: ["Next.js", "shadcn/ui", "Scheduled email"],
   },
-]
+];

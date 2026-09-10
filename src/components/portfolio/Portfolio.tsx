@@ -138,11 +138,13 @@ function ProjectCard({ project }: ProjectCardProps) {
           </a>
         </div>
         <p>{project.description}</p>
-        <ul className="tech-tags" aria-label={`${project.name} technologies`}>
-          {project.technologies.map((tech) => (
-            <li key={tech}>{tech}</li>
-          ))}
-        </ul>
+        {project.technologies.length > 0 && (
+          <ul className="tech-tags" aria-label={`${project.name} technologies`}>
+            {project.technologies.map((tech) => (
+              <li key={tech}>{tech}</li>
+            ))}
+          </ul>
+        )}
         {project.videoDescription && (
           <details className="project-notes">
             <summary>

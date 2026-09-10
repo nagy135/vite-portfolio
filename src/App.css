@@ -160,6 +160,29 @@
   border-color: color-mix(in srgb, var(--stage-ink) 25%, transparent);
   background: var(--stage);
 }
+.portal-switch-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  animation: portal-pulse 2s ease-in-out infinite;
+}
+.dark .portal-switch-logo {
+  filter: brightness(0) invert(1);
+}
+@keyframes portal-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal-switch-logo {
+    animation: none;
+  }
+}
 .robot-caption {
   position: absolute;
   top: 28px;
@@ -313,14 +336,12 @@ h2 {
   min-width: 0;
 }
 .project-britestage,
-.project-edit {
+.project-metzler,
+.project-rull {
   grid-column: span 3;
 }
-.project-grid-filtered {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-.project-grid-filtered .project {
-  grid-column: span 1;
+.project-metzler .project-media {
+  background: #dfe5da;
 }
 .project-media {
   aspect-ratio: 1.6;
@@ -942,7 +963,8 @@ details[open] > summary .details-chevron,
   }
   .project,
   .project-britestage,
-  .project-edit,
+  .project-metzler,
+  .project-rull,
   .project-ecommerce,
   .project-reminder {
     grid-column: span 1;

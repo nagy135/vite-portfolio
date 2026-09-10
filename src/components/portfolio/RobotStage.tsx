@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { Pause, Play, RotateCcw, RotateCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import PortalLogo from "@/assets/icons/portal-ring.svg"
 
 const ModelScene = lazy(() => import("@/components/portfolio/ModelScene"))
 
@@ -61,8 +62,15 @@ export function RobotStage() {
 
   return (
     <div ref={stageRef} className="robot-stage">
-      <Button variant="outline" size="sm" className="model-switch" onClick={switchModel}>
-        {model === "logo" ? "Show portal gun" : "Show logo"}
+      <Button
+        variant="outline"
+        size="sm"
+        className="model-switch"
+        aria-label={model === "logo" ? "Show portal gun" : "Show logo"}
+        title={model === "logo" ? "Show portal gun" : "Show logo"}
+        onClick={switchModel}
+      >
+        {model === "logo" ? <img src={PortalLogo} alt="" width={24} height={24} className="portal-switch-logo" /> : "Show logo"}
       </Button>
       <div className="robot-canvas">
         <RobotBoundary key={model}>
