@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# Viktor Nagy’s portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript portfolio built with Vite and Tailwind CSS v4. The main page presents projects, experience, background, and contact details, with an interactive 3D logo and a switchable portal gun.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+`npm run build` type-checks and creates the production site in `dist/`.
+`npm run preview` serves that build locally.
+`npm run lint` checks the frontend and chat server source.
+There is no automated test suite.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Content and design
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `src/data/`: project descriptions, recordings, work history, education, languages, and skills.
+- `src/components/portfolio/`: the main portfolio and separately loaded 3D scene.
+- `src/index.css`: Tailwind integration and light/dark design tokens.
+- `src/App.css`: responsive layouts and print styles.
+- `DESIGN.md`: design direction, token choices, and rationale.
+
+Project videos load when a visitor presses **Watch demo**. Preview images are still frames from the existing recordings. The playground loads only when opened. The default 3D model extrudes the two original logo silhouettes into beveled blocks. A button loads the portal gun using Three.js's TDS loader and local color and normal textures. Asset provenance is recorded in `public/models/portalgun/SOURCE.md`.
+
+Both models rotate gently when visible and use damped orbit controls for drag inertia. A pause button stops the idle spin; reduced motion disables automatic rotation and damping. Rendering returns to demand mode while paused, offscreen, or in a hidden tab.
+
+Theme selection is stored under `vite-ui-theme`. The moving background stars can be paused, stop when the page is hidden, and respect reduced motion. The site also supports the system theme preference, keyboard controls, and a printable résumé that includes the full employment history.
+
+## Optional chat demo
+
+The standalone NestJS chat service lives in `server/`. Set `VITE_CHAT_URL` in a local `.env.local` file to connect the frontend to a deployed chat service. Local development defaults to `http://localhost:3001`; without a configured production URL, the playground shows that chat is unavailable. External playgrounds depend on their own hosted services.
+
+## Verification
+
+Build and lint are the baseline checks. For UI changes, verify desktop and mobile layouts in both themes, project filters, video playback, screenshot switching, experience disclosure, keyboard navigation, and printing. The Three.js dependency is deliberately split away from the main application; Vite may still report its large rendering chunk.

@@ -1,5 +1,5 @@
 import { useAnimationFrame } from "@/hooks/use-animation";
-import { useTheme } from "@/components/theme-provider";
+import { useTheme } from "@/hooks/use-theme";
 import { useRef, useState } from "react";
 
 type Piece = {
@@ -102,7 +102,7 @@ export default function Logo() {
     pieces.map(() => [0, 0]),
   );
 
-  useAnimationFrame((_deltaTime) => {
+  useAnimationFrame(() => {
     setPieceForces((prevForces) => {
       return prevForces.map((pieceForce) => {
         return [

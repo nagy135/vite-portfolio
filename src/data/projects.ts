@@ -1,53 +1,95 @@
-export const projectsData = [
+interface ProjectData {
+  id: string
+  name: string
+  description: string
+  url: string
+  category: "Platforms" | "Personal tools"
+  technologies: string[]
+  video?: string
+  poster?: string
+  videoDescription?: string
+  images?: string[]
+}
+
+export const projectsData: ProjectData[] = [
   {
+    id: "britestage",
     name: "Britestage",
-    description: "A live event organization and runtime platform",
-    url: "https://app.britestage.com",
-    video: "/videos/britestage.mp4",
-    videoDescription:
-      "Video shows 4 browser windows, one (top left) controls bouncing via web server websockets to next 3 and shows content, my face and screen sharing. It looks to be slow but i was on very slow connection and streamed 3 browsers so it is actually quite surprising how good it works with such limited bandwidth. Bottom left: records screen (connected speaker), Bottom right: stage player, records user via webcam, Top right: main presentation player, shows content and miniature of speaker.",
-  },
-  {
-    name: "Market Rull World",
     description:
-      "Real-time marketplace using Node.js (gRPC, sockets) and Next.js",
-    url: "https://market.rull.world",
-    video: "/videos/rull.mp4",
+      "One place to run a live event. Bringing speakers, presentations, and audiences together in real time.",
+    url: "https://app.britestage.com",
+    category: "Platforms",
+    technologies: ["Live events", "WebSockets", "Screen sharing"],
+    video: "/videos/britestage.mp4",
+    poster: "/images/britestage-preview.jpg",
     videoDescription:
-      "Online NFT marketplace, with socket auction and direct transfers (with minting on demand). It is pretty much dead now with NFT not being popular now, but when i developed it, it was getting quite serious traffic since client was owner of MMA fights and played ad each match. So it was getting batches of thousands of requests at once and had a lot of query optimization and caching",
+      "This recording follows four connected browser windows: an event controller, a connected speaker, a stage player, and the main presentation. It demonstrates synchronized content, webcam streaming, and screen sharing over a limited-bandwidth connection.",
   },
   {
+    id: "edit",
     name: "Edit",
-    description: "AI image editor building tree structure of edits",
+    description:
+      "An AI image editor that keeps every possibility open. Explore edits as branches, without losing where you started.",
     url: "https://edit.infiniter.tech",
+    category: "Personal tools",
+    technologies: ["AI image editing", "Branching history"],
     images: ["/images/ai_edit_demo.jpeg", "/images/ai_edit_timeline.jpeg"],
   },
   {
-    name: "Drezydokuchyne",
+    id: "rull",
+    name: "Market Rull World",
     description:
-      "Complex solution to ecommerce built with Django, VueJS and elasticsearch",
-    url: "https://www.drezydokuchyne.sk/",
-  },
-  {
-    name: "Vocabulary Trainer",
-    description: "Personal German vocabulary app built in Next.js",
-    url: "https://word.infiniter.tech",
-    video: "/videos/vocabulary.mp4",
+      "A real-time marketplace built for live auctions, instant transfers, and bursts of traffic during MMA events.",
+    url: "https://market.rull.world",
+    category: "Platforms",
+    technologies: ["Next.js", "Node.js", "gRPC", "WebSockets"],
+    video: "/videos/rull.mp4",
+    poster: "/images/rull-preview.jpg",
     videoDescription:
-      "Small app for my personal use to learn German vocabulary, contains multiple animations that i had fun making",
+      "An NFT marketplace with live socket-based auctions and minting on demand. Promotions during MMA events generated bursts of thousands of requests, making query optimization and caching central to the implementation. This is an archived project; the recording preserves the original experience.",
   },
   {
+    id: "vocabulary",
+    name: "Vocabulary Trainer",
+    description:
+      "A small companion for learning German, built around everyday practice and playful interactions.",
+    url: "https://word.infiniter.tech",
+    category: "Personal tools",
+    technologies: ["Next.js", "Animation", "Language learning"],
+    video: "/videos/vocabulary.mp4",
+    poster: "/images/vocabulary-preview.jpg",
+    videoDescription:
+      "A personal vocabulary practice app and a place to experiment with animations that make daily learning more enjoyable.",
+  },
+  {
+    id: "fitness",
     name: "Fitness Tracker",
     description:
-      "Personal fitness tracker built with Next.js, TailwindCSS, and postgres",
+      "The workout tracker I wanted to use. A focused way to log training and follow total workout volume.",
     url: "https://fit.infiniter.tech",
+    category: "Personal tools",
+    technologies: ["Next.js", "Tailwind CSS", "Go"],
     video: "/videos/fit.mp4",
+    poster: "/images/fit-preview.jpg",
     videoDescription:
-      "Personal fitness tracker built with Next.js and sqlite, idea was to track overall volume of my workout and build exactly the app i wanted to have. Heavily vibe-coded, tried to make opinion about currect vibe-code possiblities. Golang backend + Next.js frontend",
+      "A personal training tool with a Go backend and Next.js frontend. Also an experiment in AI-assisted development and its practical limits.",
   },
   {
-    name: "Reminder App",
-    description: "Next.js + shadcn/ui app for scheduled email reminders",
-    url: "https://reminder.infiniter.tech",
+    id: "ecommerce",
+    name: "Drezydokuchyne",
+    description:
+      "An e-commerce solution connecting a Django backend, Vue.js storefront, and Elasticsearch product search.",
+    url: "https://www.drezydokuchyne.sk/",
+    category: "Platforms",
+    technologies: ["Django", "Vue.js", "Elasticsearch"],
   },
-];
+  {
+    id: "reminder",
+    name: "Reminder App",
+    description:
+      "Set a reminder, get an email. A simple tool for the things you don’t want to keep in your head.",
+    url: "https://reminder.infiniter.tech",
+    category: "Personal tools",
+    technologies: ["Next.js", "shadcn/ui", "Scheduled email"],
+  },
+]

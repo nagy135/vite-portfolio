@@ -1,6 +1,5 @@
 import { Logger } from '@nestjs/common'
 import {
-  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -43,7 +42,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
   afterInit(server: Server) {
     // Log engine.io connection errors to help diagnose CORS/path issues
-    server.engine.on('connection_error', (err: any) => {
+    server.engine.on('connection_error', (err: { req?: { headers?: { origin?: string } }; code?: number; message?: string }) => {
       this.logger.error(
         `WS connection_error origin=${err?.req?.headers?.origin} code=${err?.code} message=${err?.message}`,
       )
@@ -61,7 +60,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   @SubscribeMessage('chat_message')
   handleChatMessage(
     @MessageBody() data: ChatMessage,
-    @ConnectedSocket() client: Socket,
   ) {
     const payload: Required<ChatMessage> = {
       name: (data?.name ?? 'anonymous').toString().slice(0, 64),
