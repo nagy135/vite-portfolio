@@ -7,6 +7,8 @@
 - **Lint**: `npm run lint` (ESLint)
 - **No tests**: This project has no test suite
 
+When I say "deploy" it means use fleet skill to run build on nixpi server and that is statically served by nginx.
+
 ## Code Style
 
 ### Imports
