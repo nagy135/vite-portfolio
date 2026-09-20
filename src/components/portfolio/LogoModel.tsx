@@ -1,30 +1,12 @@
 import { useMemo } from "react"
 import { Edges } from "@react-three/drei"
 import { Shape } from "three"
+import { logoDepth, logoOutlines } from "@/data/logoData"
 
-interface LogoModelProps {
-  rotation: number
-}
-
-// The two silhouettes from Viktor's existing logo, in its original coordinate space.
-const outlines = [
-  [
-    [15.45, 13.58],
-    [22.92, 13.58],
-    [31.72, 27.68],
-    [27.95, 33.59],
-  ],
-  [
-    [30.41, 13.58],
-    [40.4, 13.58],
-    [35.41, 21.63],
-  ],
-] as const
-
-export function LogoModel({ rotation }: LogoModelProps) {
+export function LogoModel() {
   const shapes = useMemo(
     () =>
-      outlines.map((outline) => {
+      logoOutlines.map((outline) => {
         const shape = new Shape()
         outline.forEach(([x, y], index) => {
           const px = (x - 27.925) * 0.15
@@ -39,14 +21,14 @@ export function LogoModel({ rotation }: LogoModelProps) {
   )
 
   return (
-    <group rotation={[0, rotation, 0]}>
+    <group>
       {shapes.map((shape, index) => (
-        <mesh key={index} position={[0, 0, -0.22]}>
+        <mesh key={index} position={[0, 0, -logoDepth / 2]}>
           <extrudeGeometry
             args={[
               shape,
               {
-                depth: 0.44,
+                depth: logoDepth,
                 bevelEnabled: true,
                 bevelSize: 0.018,
                 bevelThickness: 0.018,

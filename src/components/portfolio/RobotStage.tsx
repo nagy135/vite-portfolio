@@ -60,7 +60,7 @@ export function RobotStage() {
 
   function switchModel(next: "logo" | "slices" | "portalgun") {
     setModel(next)
-    setRotation(0)
+    if (model === "portalgun" || next === "portalgun") setRotation(0)
   }
 
   return (
@@ -81,17 +81,17 @@ export function RobotStage() {
           size="sm"
           className="model-switch"
           aria-label={model === "slices" ? "Show solid logo" : "Show slices"}
+          title={model === "slices" ? "Show solid logo" : "Show slices"}
           aria-pressed={model === "slices"}
           onClick={() => switchModel(model === "slices" ? "logo" : "slices")}
         >
           <Layers size={16} />
-          {model === "slices" ? "Solid logo" : "Slice view"}
         </Button>
       </div>
       <div
         className={`robot-canvas${model === "slices" ? " logo-scan-canvas" : ""}`}
       >
-        <RobotBoundary key={model}>
+        <RobotBoundary key={model === "portalgun" ? "portalgun" : "logo"}>
           <Suspense
             fallback={
               <p className="robot-fallback" role="status">
@@ -125,6 +125,17 @@ export function RobotStage() {
             onChange={(event) => setScan(Number(event.target.value) / 100)}
           />
           <span aria-hidden="true">{String(Math.round(scan * 100)).padStart(2, "0")}%</span>
+          {!reducedMotion && (
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={paused ? "Resume model spin" : "Pause model spin"}
+              aria-pressed={paused}
+              onClick={() => setPaused(!paused)}
+            >
+              {paused ? <Play size={17} /> : <Pause size={17} />}
+            </Button>
+          )}
         </div>
       ) : (
         <div className="robot-controls">

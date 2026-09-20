@@ -30,10 +30,9 @@ export default function ModelScene({
   const modelName = model === "portalgun" ? "portal gun" : "logo"
   return (
     <Canvas
-      key={model}
       camera={{ position: [0, 0, 8.5], fov: 34 }}
       dpr={[1, 1.5]}
-      frameloop={model !== "slices" && autoRotate ? "always" : "demand"}
+      frameloop={autoRotate ? "always" : "demand"}
       fallback={<p className="robot-fallback">This browser cannot display the 3D model.</p>}
       aria-label={
         model === "slices"
@@ -51,12 +50,17 @@ export default function ModelScene({
           </Html>
         }
       >
-        {model === "logo" ? (
-          <LogoModel rotation={rotation} />
-        ) : model === "slices" ? (
-          <LogoSliceModel scan={scan} dark={dark} />
-        ) : (
+        {model === "portalgun" ? (
           <PortalGunModel rotation={rotation} />
+        ) : (
+          <group rotation={[0, rotation, 0]}>
+            <group visible={model === "logo"}>
+              <LogoModel />
+            </group>
+            <group visible={model === "slices"}>
+              <LogoSliceModel scan={scan} dark={dark} />
+            </group>
+          </group>
         )}
       </Suspense>
       <OrbitControls
@@ -65,7 +69,7 @@ export default function ModelScene({
         enableDamping={!reducedMotion}
         dampingFactor={0.045}
         rotateSpeed={0.65}
-        autoRotate={model !== "slices" && autoRotate}
+        autoRotate={autoRotate}
         autoRotateSpeed={0.4}
       />
     </Canvas>
