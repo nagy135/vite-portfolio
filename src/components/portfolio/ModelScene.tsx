@@ -36,7 +36,7 @@ export default function ModelScene({
       fallback={<p className="robot-fallback">This browser cannot display the 3D model.</p>}
       aria-label={
         model === "logo"
-          ? "A fixed perspective view of the logo, revealed by translucent slices. Move across it to scan its depth."
+          ? "A 3D logo revealed by translucent slices. Drag to rotate the view and use the slider to scan its depth."
           : "An interactive 3D portal gun. Drag to explore, or use the rotation buttons."
       }
     >
@@ -56,17 +56,15 @@ export default function ModelScene({
           <PortalGunModel rotation={rotation} />
         )}
       </Suspense>
-      {model === "portalgun" && (
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-          enableDamping={!reducedMotion}
-          dampingFactor={0.045}
-          rotateSpeed={0.65}
-          autoRotate={autoRotate}
-          autoRotateSpeed={0.4}
-        />
-      )}
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        enableDamping={!reducedMotion}
+        dampingFactor={0.045}
+        rotateSpeed={0.65}
+        autoRotate={model === "portalgun" && autoRotate}
+        autoRotateSpeed={0.4}
+      />
     </Canvas>
   )
 }

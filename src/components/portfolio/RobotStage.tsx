@@ -75,13 +75,13 @@ export function RobotStage() {
       >
         {model === "logo" ? <img src={PortalLogo} alt="" width={24} height={24} className="portal-switch-logo" /> : "Show logo"}
       </Button>
+      {model === "logo" && (
+        <p className="pointer-events-none absolute top-8 left-24 z-1 text-xs">
+          Drag to rotate
+        </p>
+      )}
       <div
         className={`robot-canvas${model === "logo" ? " logo-scan-canvas" : ""}`}
-        onPointerMove={(event) => {
-          if (model !== "logo") return
-          const bounds = event.currentTarget.getBoundingClientRect()
-          setScan(Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)))
-        }}
       >
         <RobotBoundary key={model}>
           <Suspense

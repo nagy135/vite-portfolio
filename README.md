@@ -22,7 +22,7 @@ There is no automated test suite.
 - `src/App.css`: responsive layouts and print styles.
 - `DESIGN.md`: design direction, token choices, and rationale.
 
-Project videos load when a visitor presses **Watch demo**. Preview images are still frames from the existing recordings. The playground loads only when opened. The default 3D logo holds a fixed perspective angle: moving across it scans a bright silhouette through its depth, with translucent slices showing the surrounding volume. A labeled range slider provides touch and keyboard control. A button loads the portal gun using Three.js's TDS loader and local color and normal textures. Asset provenance is recorded in `public/models/portalgun/SOURCE.md`.
+Project videos load when a visitor presses **Watch demo**. Preview images are still frames from the existing recordings. The playground loads only when opened. The default 3D logo starts at a perspective angle: dragging orbits the view, while a labeled range slider scans a bright silhouette through its depth, with translucent slices showing the surrounding volume. Only the slider changes the slice position, with touch and keyboard support. A button loads the portal gun using Three.js's TDS loader and local color and normal textures. Asset provenance is recorded in `public/models/portalgun/SOURCE.md`.
 
 The logo renders on demand and moves only in response to input. The portal gun rotates gently when visible and uses damped orbit controls for drag inertia. A pause button stops its idle spin; reduced motion disables automatic rotation and damping. Rendering returns to demand mode while paused, offscreen, or in a hidden tab.
 

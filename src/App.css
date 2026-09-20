@@ -205,9 +205,8 @@
 .robot-canvas canvas {
   touch-action: pan-y !important;
 }
-.logo-scan-canvas,
-.logo-scan-canvas:active {
-  cursor: ew-resize;
+.logo-scan-canvas canvas {
+  touch-action: none !important;
 }
 .logo-scan-controls {
   gap: 16px;
