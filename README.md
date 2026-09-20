@@ -22,9 +22,9 @@ There is no automated test suite.
 - `src/App.css`: responsive layouts and print styles.
 - `DESIGN.md`: design direction, token choices, and rationale.
 
-Project videos load when a visitor presses **Watch demo**. Preview images are still frames from the existing recordings. The playground loads only when opened. The default 3D model extrudes the two original logo silhouettes into beveled blocks. A button loads the portal gun using Three.js's TDS loader and local color and normal textures. Asset provenance is recorded in `public/models/portalgun/SOURCE.md`.
+Project videos load when a visitor presses **Watch demo**. Preview images are still frames from the existing recordings. The playground loads only when opened. The default 3D logo holds a fixed perspective angle: moving across it scans a bright silhouette through its depth, with translucent slices showing the surrounding volume. A labeled range slider provides touch and keyboard control. A button loads the portal gun using Three.js's TDS loader and local color and normal textures. Asset provenance is recorded in `public/models/portalgun/SOURCE.md`.
 
-Both models rotate gently when visible and use damped orbit controls for drag inertia. A pause button stops the idle spin; reduced motion disables automatic rotation and damping. Rendering returns to demand mode while paused, offscreen, or in a hidden tab.
+The logo renders on demand and moves only in response to input. The portal gun rotates gently when visible and uses damped orbit controls for drag inertia. A pause button stops its idle spin; reduced motion disables automatic rotation and damping. Rendering returns to demand mode while paused, offscreen, or in a hidden tab.
 
 Theme selection is stored under `vite-ui-theme`. The moving background stars can be paused, stop when the page is hidden, and respect reduced motion. The site also supports the system theme preference, keyboard controls, and a printable résumé that includes the full employment history.
 

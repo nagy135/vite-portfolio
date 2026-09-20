@@ -205,6 +205,37 @@
 .robot-canvas canvas {
   touch-action: pan-y !important;
 }
+.logo-scan-canvas,
+.logo-scan-canvas:active {
+  cursor: ew-resize;
+}
+.logo-scan-controls {
+  gap: 16px;
+  min-height: 32px;
+}
+.logo-scan-controls label {
+  white-space: nowrap;
+}
+.logo-scan-controls input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  cursor: ew-resize;
+  accent-color: #00756e;
+}
+.dark .logo-scan-controls input {
+  accent-color: #98f5ee;
+}
+.logo-scan-controls input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.logo-scan-controls > span {
+  width: 4ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 .robot-orbit {
   position: absolute;
   width: 70%;

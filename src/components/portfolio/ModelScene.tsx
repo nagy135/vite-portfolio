@@ -14,6 +14,8 @@ interface ModelSceneProps {
   model: "logo" | "portalgun"
   autoRotate: boolean
   reducedMotion: boolean
+  scan: number
+  dark: boolean
 }
 
 export default function ModelScene({
@@ -21,15 +23,22 @@ export default function ModelScene({
   model,
   autoRotate,
   reducedMotion,
+  scan,
+  dark,
 }: ModelSceneProps) {
   const modelName = model === "logo" ? "logo" : "portal gun"
   return (
     <Canvas
+      key={model}
       camera={{ position: [0, 0, 8.5], fov: 34 }}
       dpr={[1, 1.5]}
-      frameloop={autoRotate ? "always" : "demand"}
+      frameloop={model === "portalgun" && autoRotate ? "always" : "demand"}
       fallback={<p className="robot-fallback">This browser cannot display the 3D model.</p>}
-      aria-label={`An interactive 3D ${modelName}. Drag to explore, or use the rotation buttons.`}
+      aria-label={
+        model === "logo"
+          ? "A fixed perspective view of the logo, revealed by translucent slices. Move across it to scan its depth."
+          : "An interactive 3D portal gun. Drag to explore, or use the rotation buttons."
+      }
     >
       <ambientLight intensity={2} />
       <directionalLight position={[0, 2, 5]} intensity={2.5} color="#fff5e8" />
@@ -42,20 +51,22 @@ export default function ModelScene({
         }
       >
         {model === "logo" ? (
-          <LogoModel rotation={rotation} />
+          <LogoModel scan={scan} dark={dark} />
         ) : (
           <PortalGunModel rotation={rotation} />
         )}
       </Suspense>
-      <OrbitControls
-        enablePan={false}
-        enableZoom={false}
-        enableDamping={!reducedMotion}
-        dampingFactor={0.045}
-        rotateSpeed={0.65}
-        autoRotate={autoRotate}
-        autoRotateSpeed={0.4}
-      />
+      {model === "portalgun" && (
+        <OrbitControls
+          enablePan={false}
+          enableZoom={false}
+          enableDamping={!reducedMotion}
+          dampingFactor={0.045}
+          rotateSpeed={0.65}
+          autoRotate={autoRotate}
+          autoRotateSpeed={0.4}
+        />
+      )}
     </Canvas>
   )
 }

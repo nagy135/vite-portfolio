@@ -1,75 +1,82 @@
-import { useMemo } from "react"
-import { Edges } from "@react-three/drei"
-import { Shape } from "three"
+import { Line } from "@react-three/drei"
 
 interface LogoModelProps {
-  rotation: number
+  scan: number
+  dark: boolean
 }
 
-// The two silhouettes from Viktor's existing logo, in its original coordinate space.
+// Original logo silhouettes, centered in the same 3D coordinate space.
 const outlines = [
-  [
-    [15.45, 13.58],
-    [22.92, 13.58],
-    [31.72, 27.68],
-    [27.95, 33.59],
-  ],
-  [
-    [30.41, 13.58],
-    [40.4, 13.58],
-    [35.41, 21.63],
-  ],
-] as const
+  [[15.45, 13.58], [22.92, 13.58], [31.72, 27.68], [27.95, 33.59]],
+  [[30.41, 13.58], [40.4, 13.58], [35.41, 21.63]],
+].map((outline) =>
+  [...outline, outline[0]].map(([x, y]): [number, number, number] => [
+    (x - 27.925) * 0.15,
+    (23.585 - y) * 0.15,
+    0,
+  ]),
+)
+const depth = 1.65
+const slices = Array.from({ length: 15 }, (_, index) => index / 14)
 
-export function LogoModel({ rotation }: LogoModelProps) {
-  const shapes = useMemo(
-    () =>
-      outlines.map((outline) => {
-        const shape = new Shape()
-        outline.forEach(([x, y], index) => {
-          const px = (x - 27.925) * 0.15
-          const py = (23.585 - y) * 0.15
-          if (index === 0) shape.moveTo(px, py)
-          else shape.lineTo(px, py)
-        })
-        shape.closePath()
-        return shape
-      }),
-    [],
-  )
+export function LogoModel({ scan, dark }: LogoModelProps) {
+  const ink = dark ? "#d5e3f5" : "#344c67"
+  const accent = dark ? "#98f5ee" : "#00756e"
+  const position = (scan - 0.5) * depth
 
   return (
-    <group rotation={[0, rotation, 0]}>
-      {shapes.map((shape, index) => (
-        <mesh key={index} position={[0, 0, -0.22]}>
-          <extrudeGeometry
-            args={[
-              shape,
-              {
-                depth: 0.44,
-                bevelEnabled: true,
-                bevelSize: 0.018,
-                bevelThickness: 0.018,
-                bevelSegments: 2,
-                steps: 1,
-              },
-            ]}
-          />
-          <meshStandardMaterial
-            attach="material-0"
-            color="#ffffff"
-            metalness={0.08}
-            roughness={0.35}
-          />
-          <meshStandardMaterial
-            attach="material-1"
-            color="#8c9caa"
-            metalness={0.35}
-            roughness={0.32}
-          />
-          <Edges color="#24313c" threshold={35} />
-        </mesh>
+    <group rotation={[0.22, -0.58, -0.12]}>
+      {slices.map((slice) => (
+        <group key={slice} position={[0, 0, (slice - 0.5) * depth]}>
+          {outlines.map((points, index) => (
+            <Line
+              key={index}
+              points={points}
+              color={ink}
+              lineWidth={1}
+              transparent
+              opacity={0.1 + 0.15 * Math.max(0, 1 - Math.abs(slice - scan) * 3)}
+              depthWrite={false}
+            />
+          ))}
+        </group>
       ))}
+      {outlines.flatMap((outline, index) =>
+        outline.slice(0, -1).map(([x, y], vertex) => (
+          <Line
+            key={`${index}-${vertex}`}
+            points={[[x, y, -depth / 2], [x, y, depth / 2]]}
+            color={ink}
+            lineWidth={0.7}
+            transparent
+            opacity={0.12}
+            depthWrite={false}
+          />
+        )),
+      )}
+      <group position={[0, 0, position]}>
+        {outlines.map((points, index) => (
+          <group key={index}>
+            <Line
+              points={points}
+              color={accent}
+              lineWidth={8}
+              transparent
+              opacity={0.07}
+              depthWrite={false}
+              depthTest={false}
+              renderOrder={1}
+            />
+            <Line
+              points={points}
+              color={accent}
+              lineWidth={2.2}
+              depthTest={false}
+              renderOrder={2}
+            />
+          </group>
+        ))}
+      </group>
     </group>
   )
 }
