@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
 import { Html, OrbitControls } from "@react-three/drei"
 import { LogoModel } from "@/components/portfolio/LogoModel"
+import { LogoSliceModel } from "@/components/portfolio/LogoSliceModel"
 
 const PortalGunModel = lazy(() =>
   import("@/components/portfolio/PortalGunModel").then((module) => ({
@@ -11,7 +12,7 @@ const PortalGunModel = lazy(() =>
 
 interface ModelSceneProps {
   rotation: number
-  model: "logo" | "portalgun"
+  model: "logo" | "slices" | "portalgun"
   autoRotate: boolean
   reducedMotion: boolean
   scan: number
@@ -26,18 +27,18 @@ export default function ModelScene({
   scan,
   dark,
 }: ModelSceneProps) {
-  const modelName = model === "logo" ? "logo" : "portal gun"
+  const modelName = model === "portalgun" ? "portal gun" : "logo"
   return (
     <Canvas
       key={model}
       camera={{ position: [0, 0, 8.5], fov: 34 }}
       dpr={[1, 1.5]}
-      frameloop={model === "portalgun" && autoRotate ? "always" : "demand"}
+      frameloop={model !== "slices" && autoRotate ? "always" : "demand"}
       fallback={<p className="robot-fallback">This browser cannot display the 3D model.</p>}
       aria-label={
-        model === "logo"
-          ? "Drag to rotate the solid logo through a fixed scan direction, 45 degrees horizontally and 20 degrees vertically. Use the slider to move the scan plane."
-          : "An interactive 3D portal gun. Drag to explore, or use the rotation buttons."
+        model === "slices"
+          ? "A 3D logo revealed by translucent slices. Drag to rotate the view and use the slider to scan its depth."
+          : `An interactive 3D ${modelName}. Drag to explore, or use the rotation buttons.`
       }
     >
       <ambientLight intensity={2} />
@@ -51,22 +52,22 @@ export default function ModelScene({
         }
       >
         {model === "logo" ? (
-          <LogoModel scan={scan} dark={dark} />
+          <LogoModel rotation={rotation} />
+        ) : model === "slices" ? (
+          <LogoSliceModel scan={scan} dark={dark} />
         ) : (
           <PortalGunModel rotation={rotation} />
         )}
       </Suspense>
-      {model === "portalgun" && (
-        <OrbitControls
-          enablePan={false}
-          enableZoom={false}
-          enableDamping={!reducedMotion}
-          dampingFactor={0.045}
-          rotateSpeed={0.65}
-          autoRotate={autoRotate}
-          autoRotateSpeed={0.4}
-        />
-      )}
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        enableDamping={!reducedMotion}
+        dampingFactor={0.045}
+        rotateSpeed={0.65}
+        autoRotate={model !== "slices" && autoRotate}
+        autoRotateSpeed={0.4}
+      />
     </Canvas>
   )
 }

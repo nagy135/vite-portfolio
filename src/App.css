@@ -151,11 +151,15 @@
   border-radius: 32px 120px 32px 32px;
   overflow: hidden;
 }
-.model-switch {
+.model-switches {
   position: absolute;
   top: 20px;
   left: 24px;
   z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+.model-switch {
   color: var(--stage-ink);
   border-color: color-mix(in srgb, var(--stage-ink) 25%, transparent);
   background: var(--stage);

@@ -1,6 +1,6 @@
 import { Component, lazy, Suspense, useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { Pause, Play, RotateCcw, RotateCw } from "lucide-react"
+import { Layers, Pause, Play, RotateCcw, RotateCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/hooks/use-theme"
 import PortalLogo from "@/assets/icons/portal-ring.svg"
@@ -31,9 +31,9 @@ class RobotBoundary extends Component<RobotBoundaryProps, { failed: boolean }> {
 
 export function RobotStage() {
   const { resolvedTheme } = useTheme()
-  const [scan, setScan] = useState(0.5)
+  const [scan, setScan] = useState(0.62)
   const [rotation, setRotation] = useState(0)
-  const [model, setModel] = useState<"logo" | "portalgun">("logo")
+  const [model, setModel] = useState<"logo" | "slices" | "portalgun">("logo")
   const [paused, setPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -41,7 +41,7 @@ export function RobotStage() {
   const [visible, setVisible] = useState(true)
   const [tabVisible, setTabVisible] = useState(() => document.visibilityState !== "hidden")
   const stageRef = useRef<HTMLDivElement>(null)
-  const modelName = model === "logo" ? "logo" : "portal gun"
+  const modelName = model === "portalgun" ? "portal gun" : "logo"
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -58,30 +58,38 @@ export function RobotStage() {
     }
   }, [])
 
-  function switchModel() {
-    setModel(model === "logo" ? "portalgun" : "logo")
+  function switchModel(next: "logo" | "slices" | "portalgun") {
+    setModel(next)
     setRotation(0)
   }
 
   return (
     <div ref={stageRef} className="robot-stage">
-      <Button
-        variant="outline"
-        size="sm"
-        className="model-switch"
-        aria-label={model === "logo" ? "Show portal gun" : "Show logo"}
-        title={model === "logo" ? "Show portal gun" : "Show logo"}
-        onClick={switchModel}
-      >
-        {model === "logo" ? <img src={PortalLogo} alt="" width={24} height={24} className="portal-switch-logo" /> : "Show logo"}
-      </Button>
-      {model === "logo" && (
-        <p className="pointer-events-none absolute top-8 left-24 z-1 text-xs">
-          Drag logo to rotate
-        </p>
-      )}
+      <div className="model-switches">
+        <Button
+          variant="outline"
+          size="sm"
+          className="model-switch"
+          aria-label={model === "portalgun" ? "Show logo" : "Show portal gun"}
+          title={model === "portalgun" ? "Show logo" : "Show portal gun"}
+          onClick={() => switchModel(model === "portalgun" ? "logo" : "portalgun")}
+        >
+          {model === "portalgun" ? "Show logo" : <img src={PortalLogo} alt="" width={24} height={24} className="portal-switch-logo" />}
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="model-switch"
+          aria-label={model === "slices" ? "Show solid logo" : "Show slices"}
+          aria-pressed={model === "slices"}
+          onClick={() => switchModel(model === "slices" ? "logo" : "slices")}
+        >
+          <Layers size={16} />
+          {model === "slices" ? "Solid logo" : "Slice view"}
+        </Button>
+      </div>
       <div
-        className={`robot-canvas${model === "logo" ? " logo-scan-canvas" : ""}`}
+        className={`robot-canvas${model === "slices" ? " logo-scan-canvas" : ""}`}
       >
         <RobotBoundary key={model}>
           <Suspense
@@ -102,7 +110,7 @@ export function RobotStage() {
           </Suspense>
         </RobotBoundary>
       </div>
-      {model === "logo" ? (
+      {model === "slices" ? (
         <div className="robot-controls logo-scan-controls">
           <label htmlFor="logo-scan">Slide to scan</label>
           <input
@@ -113,7 +121,7 @@ export function RobotStage() {
             step={1}
             value={Math.round(scan * 100)}
             aria-label="Logo slice depth"
-            aria-valuetext={`${Math.round(scan * 100)} percent along the scan`}
+            aria-valuetext={`${Math.round(scan * 100)} percent through the logo`}
             onChange={(event) => setScan(Number(event.target.value) / 100)}
           />
           <span aria-hidden="true">{String(Math.round(scan * 100)).padStart(2, "0")}%</span>
