@@ -31,7 +31,7 @@ class RobotBoundary extends Component<RobotBoundaryProps, { failed: boolean }> {
 
 export function RobotStage() {
   const { resolvedTheme } = useTheme()
-  const [scan, setScan] = useState(0.62)
+  const [scan, setScan] = useState(0.5)
   const [rotation, setRotation] = useState(0)
   const [model, setModel] = useState<"logo" | "portalgun">("logo")
   const [paused, setPaused] = useState(false)
@@ -77,7 +77,7 @@ export function RobotStage() {
       </Button>
       {model === "logo" && (
         <p className="pointer-events-none absolute top-8 left-24 z-1 text-xs">
-          Drag to rotate
+          Drag logo to rotate
         </p>
       )}
       <div
@@ -113,7 +113,7 @@ export function RobotStage() {
             step={1}
             value={Math.round(scan * 100)}
             aria-label="Logo slice depth"
-            aria-valuetext={`${Math.round(scan * 100)} percent through the logo`}
+            aria-valuetext={`${Math.round(scan * 100)} percent along the scan`}
             onChange={(event) => setScan(Number(event.target.value) / 100)}
           />
           <span aria-hidden="true">{String(Math.round(scan * 100)).padStart(2, "0")}%</span>
