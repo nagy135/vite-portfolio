@@ -13,16 +13,6 @@ interface ProjectData {
 
 export const projectsData: ProjectData[] = [
   {
-    id: "metzler",
-    name: "Metzler",
-    description: "Website redesign for Metzler Bank, a German bank, built with Next.js and Payload CMS.",
-    url: "https://www.metzler.com/de",
-    category: "Platforms",
-    technologies: ["Next.js", "Payload CMS"],
-    video: "/videos/metzler.mp4",
-    poster: "/images/metzler.jpeg",
-  },
-  {
     id: "britestage",
     name: "Britestage",
     description:

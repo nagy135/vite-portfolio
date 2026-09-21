@@ -370,12 +370,8 @@ h2 {
   min-width: 0;
 }
 .project-britestage,
-.project-metzler,
 .project-rull {
   grid-column: span 3;
-}
-.project-metzler .project-media {
-  background: #dfe5da;
 }
 .project-media {
   aspect-ratio: 1.6;
@@ -997,7 +993,6 @@ details[open] > summary .details-chevron,
   }
   .project,
   .project-britestage,
-  .project-metzler,
   .project-rull,
   .project-ecommerce,
   .project-reminder {
